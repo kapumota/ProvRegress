@@ -1,10 +1,13 @@
-"""Evaluación inicial de assertions para Fase 2."""
+"""Motor determinístico de assertions para Fase 3."""
 
 from __future__ import annotations
 
 import json
 import re
 from typing import Any
+
+from jsonschema import Draft202012Validator, ValidationError as JsonSchemaValidationError
+from jsonschema.exceptions import SchemaError
 
 from llmtestlab.models import AssertionConfig, AssertionResult, LLMOutput, TestCase
 
@@ -29,7 +32,7 @@ def evaluate_assertion(assertion: AssertionConfig, test: TestCase, output: LLMOu
     }
     evaluator = evaluators.get(assertion.type)
     if evaluator is None:
-        return build_result(assertion, False, "Assertion no implementada en Fase 2.")
+        return build_result(assertion, False, "Assertion no implementada.")
     passed, message = evaluator(assertion, test, output)
     return build_result(assertion, passed, message)
 
@@ -44,38 +47,85 @@ def build_result(assertion: AssertionConfig, passed: bool, message: str) -> Asse
     )
 
 
+def assert_contains(output: str, value: str) -> bool:
+    """Verifica si la salida contiene el texto esperado sin distinguir mayúsculas."""
+    return value.lower() in output.lower()
+
+
+def assert_not_contains(output: str, value: str) -> bool:
+    """Verifica si la salida no contiene el texto prohibido sin distinguir mayúsculas."""
+    return value.lower() not in output.lower()
+
+
+def assert_contains_any(output: str, values: list[str]) -> bool:
+    """Verifica si la salida contiene al menos uno de los textos esperados."""
+    return any(value.lower() in output.lower() for value in values)
+
+
+def assert_regex(output: str, pattern: str) -> bool:
+    """Verifica si la salida cumple un patrón regular."""
+    return re.search(pattern, output) is not None
+
+
+def assert_exact_match(output: str, value: str) -> bool:
+    """Verifica coincidencia exacta ignorando espacios externos."""
+    return output.strip() == value.strip()
+
+
+def assert_max_latency_ms(latency_ms: int, value: int) -> bool:
+    """Verifica si la latencia está dentro del máximo permitido."""
+    return latency_ms <= value
+
+
+def assert_json_valid(output: str) -> bool:
+    """Verifica si la salida es JSON válido."""
+    try:
+        json.loads(output)
+    except json.JSONDecodeError:
+        return False
+    return True
+
+
+def assert_json_schema(output: str, schema: dict[str, Any]) -> bool:
+    """Verifica si la salida JSON cumple un schema JSON."""
+    data = json.loads(output)
+    Draft202012Validator.check_schema(schema)
+    Draft202012Validator(schema).validate(data)
+    return True
+
+
 def evaluate_contains(assertion: AssertionConfig, test: TestCase, output: LLMOutput) -> tuple[bool, str]:
     """Evalúa presencia de texto."""
-    expected = str(assertion.value).lower()
-    passed = expected in output.text.lower()
+    expected = str(assertion.value)
+    passed = assert_contains(output.text, expected)
     return passed, "Texto requerido encontrado." if passed else f"No se encontró el texto requerido: {assertion.value}."
 
 
 def evaluate_contains_any(assertion: AssertionConfig, test: TestCase, output: LLMOutput) -> tuple[bool, str]:
     """Evalúa si aparece al menos un texto permitido."""
     values = [str(value) for value in assertion.values or []]
-    passed = any(value.lower() in output.text.lower() for value in values)
+    passed = assert_contains_any(output.text, values)
     return passed, "Al menos un texto esperado fue encontrado." if passed else "No se encontró ningún texto esperado."
 
 
 def evaluate_not_contains(assertion: AssertionConfig, test: TestCase, output: LLMOutput) -> tuple[bool, str]:
     """Evalúa ausencia de texto prohibido."""
-    forbidden = str(assertion.value).lower()
-    passed = forbidden not in output.text.lower()
+    forbidden = str(assertion.value)
+    passed = assert_not_contains(output.text, forbidden)
     return passed, "Texto prohibido ausente." if passed else f"Se encontró texto prohibido: {assertion.value}."
 
 
 def evaluate_regex(assertion: AssertionConfig, test: TestCase, output: LLMOutput) -> tuple[bool, str]:
     """Evalúa un patrón regular."""
     pattern = str(assertion.pattern)
-    passed = re.search(pattern, output.text) is not None
+    passed = assert_regex(output.text, pattern)
     return passed, "Patrón encontrado." if passed else f"No se encontró el patrón: {pattern}."
 
 
 def evaluate_exact_match(assertion: AssertionConfig, test: TestCase, output: LLMOutput) -> tuple[bool, str]:
     """Evalúa coincidencia exacta."""
-    expected = str(assertion.value).strip()
-    passed = output.text.strip() == expected
+    expected = str(assertion.value)
+    passed = assert_exact_match(output.text, expected)
     return passed, "Coincidencia exacta." if passed else "La salida no coincide exactamente."
 
 
@@ -89,49 +139,29 @@ def evaluate_json_valid(assertion: AssertionConfig, test: TestCase, output: LLMO
 
 
 def evaluate_json_schema(assertion: AssertionConfig, test: TestCase, output: LLMOutput) -> tuple[bool, str]:
-    """Evalúa una validación mínima de schema JSON."""
-    try:
-        data = json.loads(output.text)
-    except json.JSONDecodeError as exc:
-        return False, f"JSON inválido: {exc.msg}."
-
+    """Evalúa si la salida cumple un schema JSON."""
     schema = assertion.schema_
     if not isinstance(schema, dict):
-        return False, "schema debe estar definido inline como objeto YAML en Fase 2."
+        return False, "schema debe ser un objeto YAML o una ruta resuelta a un archivo JSON."
 
-    required = schema.get("required", [])
-    if isinstance(required, list):
-        missing = [field for field in required if field not in data]
-        if missing:
-            return False, "Faltan campos requeridos: " + ", ".join(str(field) for field in missing) + "."
-
-    properties = schema.get("properties", {})
-    if isinstance(properties, dict):
-        for field, rule in properties.items():
-            if field in data and isinstance(rule, dict) and "type" in rule:
-                if not has_json_type(data[field], str(rule["type"])):
-                    return False, f"El campo {field} no cumple el tipo {rule['type']}."
-
-    return True, "JSON cumple el schema mínimo."
+    try:
+        assert_json_schema(output.text, schema)
+    except json.JSONDecodeError as exc:
+        return False, f"JSON inválido: {exc.msg}."
+    except SchemaError as exc:
+        return False, f"Schema JSON inválido: {exc.message}."
+    except JsonSchemaValidationError as exc:
+        path = ".".join(str(part) for part in exc.path)
+        location = f" en {path}" if path else ""
+        return False, f"JSON no cumple el schema{location}: {exc.message}."
+    return True, "JSON cumple el schema."
 
 
-def has_json_type(value: Any, expected_type: str) -> bool:
-    """Verifica tipos JSON básicos."""
-    if expected_type == "string":
-        return isinstance(value, str)
-    if expected_type == "number":
-        return isinstance(value, int | float) and not isinstance(value, bool)
-    if expected_type == "integer":
-        return isinstance(value, int) and not isinstance(value, bool)
-    if expected_type == "boolean":
-        return isinstance(value, bool)
-    if expected_type == "object":
-        return isinstance(value, dict)
-    if expected_type == "array":
-        return isinstance(value, list)
-    if expected_type == "null":
-        return value is None
-    return True
+def evaluate_max_latency_ms(assertion: AssertionConfig, test: TestCase, output: LLMOutput) -> tuple[bool, str]:
+    """Evalúa latencia máxima."""
+    limit = int(assertion.value)
+    passed = assert_max_latency_ms(output.latency_ms, limit)
+    return passed, f"Latencia {output.latency_ms} ms dentro del límite." if passed else f"Latencia {output.latency_ms} ms supera {limit} ms."
 
 
 def evaluate_grounded_in_sources(assertion: AssertionConfig, test: TestCase, output: LLMOutput) -> tuple[bool, str]:
@@ -162,15 +192,8 @@ def evaluate_context_recall(assertion: AssertionConfig, test: TestCase, output: 
 
 
 def evaluate_no_unsupported_claims(assertion: AssertionConfig, test: TestCase, output: LLMOutput) -> tuple[bool, str]:
-    """Evalúa ausencia de claims no soportados en modo básico."""
-    return True, "No se detectaron afirmaciones no sustentadas en Fase 2."
-
-
-def evaluate_max_latency_ms(assertion: AssertionConfig, test: TestCase, output: LLMOutput) -> tuple[bool, str]:
-    """Evalúa latencia máxima."""
-    limit = int(assertion.value)
-    passed = output.latency_ms <= limit
-    return passed, f"Latencia {output.latency_ms} ms dentro del límite." if passed else f"Latencia {output.latency_ms} ms supera {limit} ms."
+    """Evalúa ausencia básica de afirmaciones no sustentadas."""
+    return True, "No se detectaron afirmaciones no sustentadas en modo básico."
 
 
 def evaluate_max_cost_usd(assertion: AssertionConfig, test: TestCase, output: LLMOutput) -> tuple[bool, str]:

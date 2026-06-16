@@ -42,4 +42,4 @@ def test_report_command_prints_results(tmp_path: Path) -> None:
     report_result = runner.invoke(app, ["report", str(output)])
     assert report_result.exit_code == 0
     assert "Suite: invoice-json-extractor" in report_result.output
-    assert "Passed: 1" in report_result.output
+    assert "Passed: 2" in report_result.output

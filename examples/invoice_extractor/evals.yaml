@@ -1,6 +1,6 @@
 suite: invoice-json-extractor
 app_type: json_extractor
-version: 0.2.0
+version: 0.3.0
 providers:
   baseline:
     model: gpt-4.1-mini
@@ -21,6 +21,23 @@ tests:
         severity: critical
       - type: json_schema
         severity: critical
+        schema: schemas/invoice.schema.json
+      - type: regex
+        pattern: '"invoice_number"\s*:\s*"INV-[0-9]+"'
+        severity: high
+      - type: max_latency_ms
+        value: 5000
+        severity: medium
+  - id: invoice-002
+    input: "Extrae JSON de esta factura: Proveedor Beta, número INV-002, total 75.00 USD."
+    metadata:
+      mock_output: '{"vendor":"Beta","invoice_number":"INV-002","total":75.00}'
+      mock_latency_ms: 70
+    assertions:
+      - type: json_valid
+        severity: critical
+      - type: json_schema
+        severity: critical
         schema:
           type: object
           required: ["vendor", "invoice_number", "total"]
@@ -31,6 +48,3 @@ tests:
               type: string
             total:
               type: number
-      - type: contains
-        value: "INV-001"
-        severity: high

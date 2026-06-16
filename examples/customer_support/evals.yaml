@@ -1,6 +1,6 @@
 suite: customer-support-chatbot
 app_type: simple_chatbot
-version: 0.2.0
+version: 0.3.0
 providers:
   baseline:
     model: gpt-4.1-mini

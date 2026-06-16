@@ -1,4 +1,4 @@
-"""Reportes de consola para Fase 2."""
+"""Reportes de consola para LLMTestLab."""
 
 from __future__ import annotations
 
@@ -9,7 +9,7 @@ def render_run_summary(result: RunResult) -> str:
     """Renderiza resumen de ejecución."""
     lines = [f"Running suite: {result.suite}", ""]
     for test in result.tests:
-        mark = "✓" if test.status == TestStatus.PASSED else "✗"
+        mark = "PASS" if test.status == TestStatus.PASSED else "FAIL"
         lines.append(f"{mark} {test.id}")
     lines.extend([
         "",
@@ -32,9 +32,9 @@ def render_console_report(result: RunResult) -> str:
         "Tests:",
     ]
     for test in result.tests:
-        mark = "✓" if test.status == TestStatus.PASSED else "✗"
+        mark = "PASS" if test.status == TestStatus.PASSED else "FAIL"
         lines.append(f"{mark} {test.id}")
         for assertion in test.assertions:
-            assertion_mark = "✓" if assertion.passed else "✗"
+            assertion_mark = "PASS" if assertion.passed else "FAIL"
             lines.append(f"  {assertion_mark} {assertion.type}: {assertion.message}")
     return "\n".join(lines) + "\n"
