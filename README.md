@@ -235,23 +235,6 @@ LLMTestLab/
   pyproject.toml
 ```
 
-### Convenciones del proyecto
-
-#### Código
-
-* nombres de funciones en inglés
-* nombres de clases en inglés
-* nombres de variables en inglés
-* comentarios en español
-* cadenas visibles en español
-
-#### Documentación
-
-* títulos con `###`
-* subtítulos con `####`
-* sin guiones largos
-* sin líneas decorativas
-* sin emoticones
 
 ### Flujo de trabajo recomendado
 
