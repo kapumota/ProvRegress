@@ -95,8 +95,8 @@ def test_render_scope_markdown_contains_required_phase_zero_table():
 
     markdown = render_scope_markdown(scope)
 
-    assert "# LLMTestLab - Fase 0: Definición del alcance" in markdown
+    assert "### LLMTestLab - Fase 0: Definición del alcance" in markdown
     assert "| Chatbot simple | calidad de respuesta |" in markdown
     assert "| Extractor JSON | estructura y campos correctos |" in markdown
     assert "| RAG básico | respuesta sustentada por documentos |" in markdown
-    assert "## Fuera del alcance por ahora" in markdown
+    assert "#### Fuera del alcance por ahora" in markdown

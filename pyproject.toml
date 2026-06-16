@@ -4,14 +4,16 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "llmtestlab"
-version = "0.0.1"
-description = "Fase 0 de LLMTestLab: definición estricta del alcance del proyecto."
+version = "0.1.0"
+description = "Fase 1 de LLMTestLab: diseño e implementación del formato evals.yaml."
 readme = "README.md"
 requires-python = ">=3.10"
 authors = [
   { name = "LLMTestLab Team" }
 ]
-dependencies = []
+dependencies = [
+  "PyYAML>=6.0.0"
+]
 
 [project.optional-dependencies]
 dev = [

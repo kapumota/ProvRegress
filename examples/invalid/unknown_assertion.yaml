@@ -1,0 +1,18 @@
+suite: unknown-assertion
+app_type: simple_chatbot
+version: 0.1.0
+
+providers:
+  baseline:
+    model: gpt-4.1-mini
+    prompt: prompts/v1.txt
+  candidate:
+    model: gpt-4.1-mini
+    prompt: prompts/v2.txt
+
+tests:
+  - id: refund-policy-001
+    input: "¿Puedo pedir un reembolso después de 45 días?"
+    assertions:
+      - type: magic_quality_check
+        threshold: 0.8

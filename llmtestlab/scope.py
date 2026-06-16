@@ -164,8 +164,8 @@ def build_default_scope() -> ProjectScope:
         ],
         out_of_scope=[
             "No ejecutar llamadas reales a modelos LLM en Fase 0.",
-            "No implementar assertions ni evaluadores en Fase 0.",
-            "No comparar baseline contra candidate en Fase 0.",
+            "No implementar aserciones ni evaluadores en Fase 0.",
+            "No comparar versión base contra versión candidata en Fase 0.",
             "No construir dashboard web en Fase 0.",
             "No integrar CI/CD en Fase 0.",
             "No soportar agentes complejos ni agentes con tools en la primera versión.",
@@ -187,8 +187,8 @@ def build_default_scope() -> ProjectScope:
             "Construir dashboard o CI/CD antes de validar el contrato de pruebas.",
         ],
         next_phase=(
-            "Fase 1: diseñar el formato evals.yaml para declarar suites, providers, "
-            "casos de prueba, assertions, severidades y umbrales."
+            "Fase 1: diseñar el formato evals.yaml para declarar suites, proveedores, "
+            "casos de prueba, aserciones, severidades y umbrales."
         ),
     )
 
@@ -322,53 +322,53 @@ def render_scope_markdown(scope: ProjectScope) -> str:
     success = "\n".join(f"- {item}" for item in scope.success_criteria)
     risks = "\n".join(f"- {item}" for item in scope.risks)
 
-    return f"""# {scope.project_name} - Fase 0: Definición del alcance
+    return f"""### {scope.project_name} - Fase 0: Definición del alcance
 
-## Nombre
+#### Nombre
 
 {scope.project_name}
 
-## Foco
+#### Foco
 
 {scope.focus}
 
-## Diferenciador
+#### Diferenciador
 
 {scope.differentiator}
 
-## Versión
+#### Versión
 
 {scope.version}
 
-## Resumen del producto
+#### Resumen del producto
 
 {scope.product_summary}
 
-## Meta principal
+#### Meta principal
 
 {scope.primary_goal}
 
-## Tipos de aplicación soportados en la primera versión
+#### Tipos de aplicación soportados en la primera versión
 
 {app_table}
 
-## Dentro del alcance
+#### Dentro del alcance
 
 {in_scope}
 
-## Fuera del alcance por ahora
+#### Fuera del alcance por ahora
 
 {out_scope}
 
-## Criterios de éxito
+#### Criterios de éxito
 
 {success}
 
-## Riesgos técnicos iniciales
+#### Riesgos técnicos iniciales
 
 {risks}
 
-## Siguiente fase
+#### Siguiente fase
 
 {scope.next_phase}
 """
@@ -378,3 +378,17 @@ def write_scope_markdown(scope: ProjectScope, output_path: Path) -> None:
     """Escribe el documento Markdown de alcance."""
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(render_scope_markdown(scope), encoding="utf-8")
+
+
+def render_scope_text(scope: ProjectScope) -> str:
+    """Genera una versión de texto plano del alcance."""
+    lines = [
+        f"Proyecto: {scope.project_name}",
+        f"Versión: {scope.version}",
+        f"Foco: {scope.focus}",
+        f"Diferenciador: {scope.differentiator}",
+        "Tipos de aplicación:",
+    ]
+    for profile in scope.supported_app_profiles:
+        lines.append(f"- {profile.display_name}: {profile.evaluation_target}")
+    return "\n".join(lines) + "\n"

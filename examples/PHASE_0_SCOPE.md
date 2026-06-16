@@ -46,8 +46,8 @@ Definir exactamente qué se construirá antes de programar el motor de pruebas: 
 #### Fuera del alcance por ahora
 
 - No ejecutar llamadas reales a modelos LLM en Fase 0.
-- No implementar assertions ni evaluadores en Fase 0.
-- No comparar baseline contra candidate en Fase 0.
+- No implementar aserciones ni evaluadores en Fase 0.
+- No comparar versión base contra versión candidata en Fase 0.
 - No construir dashboard web en Fase 0.
 - No integrar CI/CD en Fase 0.
 - No soportar agentes complejos ni agentes con tools en la primera versión.
@@ -72,4 +72,4 @@ Definir exactamente qué se construirá antes de programar el motor de pruebas: 
 
 #### Siguiente fase
 
-Fase 1: diseñar el formato evals.yaml para declarar suites, providers, casos de prueba, assertions, severidades y umbrales.
+Fase 1: diseñar el formato evals.yaml para declarar suites, proveedores, casos de prueba, aserciones, severidades y umbrales.

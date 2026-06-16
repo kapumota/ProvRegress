@@ -1,4 +1,4 @@
-"""Permite ejecutar el paquete con `python -m llmtestlab`."""
+"""Punto de entrada para ejecutar el paquete con python -m llmtestlab."""
 
 from llmtestlab.cli import main
 

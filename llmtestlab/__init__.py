@@ -1,7 +1,3 @@
-"""Paquete inicial de LLMTestLab."""
+"""Paquete principal de LLMTestLab."""
 
-from llmtestlab.scope import AppType, ProjectScope, build_default_scope, validate_scope
-
-__all__ = ["AppType", "ProjectScope", "build_default_scope", "validate_scope"]
-
-__version__ = "0.0.1"
+__version__ = "0.1.0"

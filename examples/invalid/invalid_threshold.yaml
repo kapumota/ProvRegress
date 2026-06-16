@@ -1,0 +1,20 @@
+suite: invalid-threshold
+app_type: basic_rag
+version: 0.1.0
+
+providers:
+  baseline:
+    model: gpt-4.1-mini
+    prompt: prompts/v1.txt
+  candidate:
+    model: gpt-4.1-mini
+    prompt: prompts/v2.txt
+
+tests:
+  - id: refund-policy-001
+    input: "¿Puedo pedir un reembolso después de 45 días?"
+    required_sources:
+      - docs/refund_policy.md
+    assertions:
+      - type: grounded_in_sources
+        threshold: 1.5
