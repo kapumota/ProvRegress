@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "llmtestlab"
+version = "0.0.1"
+description = "Fase 0 de LLMTestLab: definición estricta del alcance del proyecto."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+  { name = "LLMTestLab Team" }
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0.0"
+]
+
+[project.scripts]
+llmtestlab = "llmtestlab.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["llmtestlab*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
