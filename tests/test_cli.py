@@ -1,53 +1,45 @@
 from pathlib import Path
 
-from llmtestlab.cli import main
+from typer.testing import CliRunner
+
+from llmtestlab.cli import app
+
+ROOT = Path(__file__).resolve().parents[1]
+runner = CliRunner()
 
 
-def test_cli_init_creates_phase_zero_artifacts(tmp_path: Path):
-    exit_code = main(["init", "--output", str(tmp_path)])
-
-    assert exit_code == 0
-    assert (tmp_path / "scope.json").exists()
-    assert (tmp_path / "PHASE_0_SCOPE.md").exists()
+def test_validate_command_passes() -> None:
+    result = runner.invoke(app, ["validate", str(ROOT / "examples" / "customer_support" / "evals.yaml")])
+    assert result.exit_code == 0
+    assert "válido" in result.output
 
 
-def test_cli_init_refuses_to_overwrite_without_force(tmp_path: Path):
-    first_exit_code = main(["init", "--output", str(tmp_path)])
-    second_exit_code = main(["init", "--output", str(tmp_path)])
-
-    assert first_exit_code == 0
-    assert second_exit_code == 2
+def test_validate_command_fails() -> None:
+    result = runner.invoke(app, ["validate", str(ROOT / "examples" / "invalid" / "missing_candidate.yaml")])
+    assert result.exit_code == 1
+    assert "candidate" in result.output
 
 
-def test_cli_validate_accepts_default_scope(tmp_path: Path, capsys):
-    main(["init", "--output", str(tmp_path)])
-
-    exit_code = main(["validate", str(tmp_path / "scope.json")])
-    captured = capsys.readouterr()
-
-    assert exit_code == 0
-    assert "El alcance cumple la Fase 0." in captured.out
-
-
-def test_cli_summary_text_contains_phase_zero_decisions(tmp_path: Path, capsys):
-    main(["init", "--output", str(tmp_path)])
-
-    exit_code = main(["summary", str(tmp_path / "scope.json")])
-    captured = capsys.readouterr()
-
-    assert exit_code == 0
-    assert "Proyecto: LLMTestLab" in captured.out
-    assert "Foco: unit testing + regression testing para apps LLM" in captured.out
-    assert "Chatbot simple: calidad de respuesta" in captured.out
-    assert "Extractor JSON: estructura y campos correctos" in captured.out
-    assert "RAG básico: respuesta sustentada por documentos" in captured.out
+def test_run_command_creates_results(tmp_path: Path) -> None:
+    output = tmp_path / "results.json"
+    result = runner.invoke(
+        app,
+        ["run", str(ROOT / "examples" / "customer_support" / "evals.yaml"), "--output", str(output)],
+    )
+    assert result.exit_code == 0
+    assert output.exists()
+    assert "Passed: 3" in result.output
+    assert "Failed: 0" in result.output
 
 
-def test_cli_summary_markdown_contains_table(tmp_path: Path, capsys):
-    main(["init", "--output", str(tmp_path)])
-
-    exit_code = main(["summary", str(tmp_path / "scope.json"), "--format", "markdown"])
-    captured = capsys.readouterr()
-
-    assert exit_code == 0
-    assert "| Tipo de app | Qué evalúas | Ejemplos de prueba |" in captured.out
+def test_report_command_prints_results(tmp_path: Path) -> None:
+    output = tmp_path / "results.json"
+    run_result = runner.invoke(
+        app,
+        ["run", str(ROOT / "examples" / "invoice_extractor" / "evals.yaml"), "--output", str(output)],
+    )
+    assert run_result.exit_code == 0
+    report_result = runner.invoke(app, ["report", str(output)])
+    assert report_result.exit_code == 0
+    assert "Suite: invoice-json-extractor" in report_result.output
+    assert "Passed: 1" in report_result.output

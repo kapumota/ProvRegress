@@ -1,6 +1,6 @@
-"""Punto de entrada para ejecutar el paquete con python -m llmtestlab."""
+"""Punto de entrada ejecutable para python -m llmtestlab."""
 
-from llmtestlab.cli import main
+from llmtestlab.cli import app
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    app()

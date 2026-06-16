@@ -1,0 +1,36 @@
+suite: invoice-json-extractor
+app_type: json_extractor
+version: 0.2.0
+providers:
+  baseline:
+    model: gpt-4.1-mini
+    prompt: prompts/v1.txt
+    provider: mock
+  candidate:
+    model: gpt-4.1-mini
+    prompt: prompts/v2.txt
+    provider: mock
+tests:
+  - id: invoice-001
+    input: "Extrae JSON de esta factura: Proveedor ACME, número INV-001, total 125.50 USD."
+    metadata:
+      mock_output: '{"vendor":"ACME","invoice_number":"INV-001","total":125.50}'
+      mock_latency_ms: 80
+    assertions:
+      - type: json_valid
+        severity: critical
+      - type: json_schema
+        severity: critical
+        schema:
+          type: object
+          required: ["vendor", "invoice_number", "total"]
+          properties:
+            vendor:
+              type: string
+            invoice_number:
+              type: string
+            total:
+              type: number
+      - type: contains
+        value: "INV-001"
+        severity: high

@@ -1,7 +1,6 @@
-suite: duplicate-test-ids
+suite: invalid-suite
 app_type: simple_chatbot
-version: 0.1.0
-
+version: 0.2.0
 providers:
   baseline:
     model: gpt-4.1-mini
@@ -9,15 +8,14 @@ providers:
   candidate:
     model: gpt-4.1-mini
     prompt: prompts/v2.txt
-
 tests:
-  - id: refund-policy-001
-    input: "Pregunta uno"
+  - id: sample-001
+    input: "Hola"
     assertions:
       - type: contains
-        value: "respuesta"
-  - id: refund-policy-001
-    input: "Pregunta dos"
+        value: "Hola"
+  - id: sample-001
+    input: "Hola otra vez"
     assertions:
       - type: contains
-        value: "respuesta"
+        value: "Hola"

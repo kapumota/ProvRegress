@@ -1,1 +1,1 @@
-Responde de forma precisa y conservadora. Conserva hechos críticos.
+Extrae facturas como JSON válido.

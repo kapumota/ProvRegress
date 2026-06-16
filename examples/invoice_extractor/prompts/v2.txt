@@ -1,1 +1,1 @@
-Responde de forma breve, precisa y sustentada.
+Devuelve solo JSON.

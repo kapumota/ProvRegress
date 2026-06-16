@@ -1,7 +1,6 @@
-suite: json-without-json-assertion
+suite: invalid-suite
 app_type: json_extractor
-version: 0.1.0
-
+version: 0.2.0
 providers:
   baseline:
     model: gpt-4.1-mini
@@ -9,10 +8,9 @@ providers:
   candidate:
     model: gpt-4.1-mini
     prompt: prompts/v2.txt
-
 tests:
-  - id: factura-001
-    input: "Extrae una factura como JSON."
+  - id: invoice-001
+    input: "Extrae una factura"
     assertions:
       - type: contains
-        value: "factura"
+        value: "INV"

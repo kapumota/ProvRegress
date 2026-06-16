@@ -1,15 +1,13 @@
-suite: missing-candidate
+suite: invalid-suite
 app_type: simple_chatbot
-version: 0.1.0
-
+version: 0.2.0
 providers:
   baseline:
     model: gpt-4.1-mini
     prompt: prompts/v1.txt
-
 tests:
-  - id: refund-policy-001
-    input: "¿Puedo pedir un reembolso después de 45 días?"
+  - id: sample-001
+    input: "Hola"
     assertions:
       - type: contains
-        value: "30 días"
+        value: "Hola"

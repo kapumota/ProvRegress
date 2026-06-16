@@ -1,5 +1,6 @@
-"""Contratos de proveedores para fases posteriores."""
+"""Providers disponibles para LLMTestLab."""
 
-from llmtestlab.providers.base import ProviderRequest, ProviderResponse
+from llmtestlab.providers.base import BaseProvider
+from llmtestlab.providers.mock import MockProvider, ProviderError
 
-__all__ = ["ProviderRequest", "ProviderResponse"]
+__all__ = ["BaseProvider", "MockProvider", "ProviderError"]

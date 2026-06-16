@@ -1,1 +1,1 @@
-Responde de forma precisa y conservadora. Conserva hechos críticos.
+Responde como asistente de soporte. Conserva restricciones numéricas.

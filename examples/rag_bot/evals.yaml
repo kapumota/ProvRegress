@@ -1,0 +1,44 @@
+suite: customer-support-rag
+app_type: basic_rag
+version: 0.2.0
+providers:
+  baseline:
+    model: gpt-4.1-mini
+    prompt: prompts/v1.txt
+    provider: mock
+  candidate:
+    model: gpt-4.1-mini
+    prompt: prompts/v2.txt
+    provider: mock
+tests:
+  - id: refund-policy-001
+    input: "Can I get a refund after 45 days?"
+    expected_facts:
+      - "Refunds are allowed within 30 days."
+      - "Exceptions require manager approval."
+    required_sources:
+      - docs/refund_policy.md
+    metadata:
+      mock_output: "Refunds are allowed within 30 days. Exceptions require manager approval."
+      mock_sources:
+        - docs/refund_policy.md
+      mock_latency_ms: 150
+    assertions:
+      - type: contains
+        value: "30 days"
+        severity: critical
+      - type: contains_any
+        values: ["exception", "manager approval"]
+        severity: high
+      - type: not_contains
+        value: "refunds are always allowed"
+        severity: critical
+      - type: grounded_in_sources
+        threshold: 0.85
+        severity: critical
+      - type: citation_accuracy
+        threshold: 0.80
+        severity: high
+      - type: max_latency_ms
+        value: 5000
+        severity: medium

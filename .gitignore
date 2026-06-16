@@ -1,14 +1,21 @@
+# Entornos virtuales
 .llmtest/
 .venv/
+venv/
+
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
 .pytest_cache/
+*.egg-info/
 dist/
 build/
-*.egg-info/
-.DS_Store
-scope.json
-PHASE_0_SCOPE.md
-evals.yaml
-results/
-reports/
+
+# Variables locales
+.env
+
+# Resultados locales
+results.json
+baseline.json
+candidate.json
+comparison.json

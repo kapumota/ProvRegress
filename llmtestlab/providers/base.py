@@ -1,26 +1,18 @@
-"""Tipos base para proveedores de modelos.
+"""Contrato base de providers."""
 
-La implementación real de llamadas a modelos queda fuera de Fase 1.
-"""
+from __future__ import annotations
 
-from dataclasses import dataclass
+from abc import ABC, abstractmethod
 
-
-@dataclass(frozen=True)
-class ProviderRequest:
-    """Solicitud declarativa para un proveedor."""
-
-    input: str
-    prompt: str
-    model: str
+from llmtestlab.models import LLMOutput, ProviderConfig, TestCase
 
 
-@dataclass(frozen=True)
-class ProviderResponse:
-    """Respuesta normalizada de un proveedor."""
+class BaseProvider(ABC):
+    """Interfaz mínima de un provider."""
 
-    text: str
-    latency_ms: int | None = None
-    input_tokens: int | None = None
-    output_tokens: int | None = None
-    cost_usd: float | None = None
+    def __init__(self, config: ProviderConfig) -> None:
+        self.config = config
+
+    @abstractmethod
+    def generate(self, test: TestCase) -> LLMOutput:
+        """Genera una salida para un caso de prueba."""
