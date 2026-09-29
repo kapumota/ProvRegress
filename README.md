@@ -136,6 +136,6 @@ Consulta [SECURITY.md](SECURITY.md).
 
 ### Licencia
 
-El repositorio no declara todavía una licencia de software.
+ProvRegress se distribuye bajo Apache License 2.0.
 
-Antes de aceptar contribuciones externas o distribuir el software para reutilización, el propietario debe seleccionar y añadir una licencia explícita.
+Consulta [LICENSE](LICENSE) para conocer los términos completos.
