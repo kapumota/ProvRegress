@@ -1,94 +1,144 @@
-### Roadmap
+### Roadmap de ProvRegress
 
-#### Fase 0
+#### R0.0, baseline reproducible
 
-Estado: completada
+Estado: cerrado.
 
-Define el alcance estricto del proyecto.
+Resultado:
 
-Incluye:
+- repositorio privado verificado
+- HEAD histórico registrado
+- entorno virtual aislado
+- 40 tests legacy reproducidos
 
-- nombre LLMTestLab
-- foco en unit testing y regression testing
-- soporte inicial para chatbot simple, extractor JSON y RAG básico
-- límites explícitos del MVP
+#### R0.1, identidad del proyecto
 
-#### Fase 1
+Estado: en preparación.
 
-Estado: completada
+Objetivo:
 
-Diseña el formato `evals.yaml`.
+- consolidar el nombre ProvRegress
+- preservar el package `llmtestlab` como compatibilidad legacy
+- introducir el package `provregress`
+- preparar el repositorio para visibilidad pública
 
-Incluye:
+#### R0.7, P0 y P1
 
-- suites
-- providers
-- baseline
-- candidate
-- tests
-- assertions
+Objetivo:
+
+- schemas estrictos
+- hashing determinista
+- manifests
+- pilot firewall
+- RunContext
+- EventEnvelope
+- ArtifactStore
+- JSONL append-only
+- EventSink
+- RunManifest
+
+No incluye experimentos.
+
+#### R0.8, P2 y P3
+
+Objetivo:
+
+- especificación de `tau -> G`
+- identidad canónica de nodos
+- construcción de aristas
+- serialización determinista
+- validación de DAG
+- alignment baseline y candidate
+- `DeltaG`
+- golden fixtures
+
+#### R0.8-I, referencia Python
+
+Objetivo:
+
+- projector
+- canonicalization
+- alignment
+- graph diff
+- fixtures verificables
+
+Python será la implementación semántica de referencia.
+
+#### R0.9, Rust core
+
+Objetivo:
+
+- event ingestion
+- hashing
+- artifact verification
+- graph projection
+- graph diff
+- procesamiento paralelo
+
+Rust debe ser conforme con los golden fixtures de Python.
+
+#### R1.0, mutation harness
+
+Objetivo:
+
+- mutaciones controladas
+- target conocido
+- manifests de mutación
+- controles identity y evaluator
+
+#### R1.1 a R1.3, aplicaciones experimentales
+
+A1:
+
+- structured extraction
+
+A2:
+
+- evidence-grounded RAG
+
+A3:
+
+- tool-using workflow
+
+#### R1.4, piloto
+
+Objetivo:
+
+- no-change variance
+- severity calibration
+- leakage audit
+- power analysis
+- evaluator and system variance identifiability
+
+#### R1.5, preregistro final
+
+Antes de cualquier experimento confirmatorio se congelarán:
+
+- hipótesis
+- casos
+- mutaciones
 - severidades
-- umbrales
-- ejemplos válidos e inválidos
+- sample size
+- repetitions
+- baselines
+- endpoints
+- statistical models
+- stopping rules
 
-#### Fase 2
+#### R2.0, confirmatory study
 
-Estado: completada
+Solo después del preregistro final.
 
-Agrega CLI básico.
+#### Líneas posteriores
 
-Incluye:
+Paper 2:
 
-- `llmtestlab validate evals.yaml`
-- `llmtestlab run evals.yaml`
-- `llmtestlab report results.json`
-- lectura de YAML
-- validación de estructura
-- ejecución con provider mock
-- resultados JSON
-- resumen en consola
+- learned paired graph representations
 
-#### Fase 3
+Paper 3:
 
-Estado: completada
+- mutation-grounded causal attribution
 
-Agrega el Assertion Engine determinístico.
+Paper 4:
 
-Incluye:
-
-- `contains`
-- `not_contains`
-- `contains_any`
-- `regex`
-- `exact_match`
-- `max_latency_ms`
-- `json_valid`
-- `json_schema`
-
-También conserva compatibilidad con:
-
-- comandos de Fase 0
-- comandos `evals` de Fase 1
-- comandos `validate`, `run` y `report` de Fase 2
-
-#### Fase 4
-
-Estado: pendiente
-
-Agregar providers de modelos.
-
-Providers mínimos:
-
-- mock provider
-- OpenAI-compatible API
-- Ollama o modelo local
-
-#### Criterio de avance
-
-Antes de pasar a la siguiente fase:
-
-- ejecutar `pytest -q`
-- ejecutar validaciones de Fase 0, Fase 1, Fase 2 y Fase 3
-- limpiar archivos temporales
-- revisar `git diff --check`
-- commitear una fase completa
+- temporal regression graphs
