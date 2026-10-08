@@ -52,3 +52,33 @@ jobs:
         run: cargo test --workspace --locked
       - name: Análisis estático
         run: cargo clippy --workspace --all-targets --locked -- -D warnings
+
+  cross_language:
+    name: Conformidad cruzada Python Rust
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - name: Instalar la referencia Python
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e '.[dev]'
+          python -m pip check
+      - name: Instalar toolchain Rust
+        run: |
+          rustup toolchain install stable --profile minimal --component rustfmt --component clippy
+          rustup default stable
+      - name: Construir adaptador Rust
+        run: cargo build --workspace --locked --bin provregress-conformance
+      - name: Comparar las implementaciones y rechazos
+        env:
+          PROVREGRESS_RUST_BIN: target/debug/provregress-conformance
+        run: python -m pytest -q research/verification/test_r09_cross_conformance.py
+      - name: Verificar golden congelados
+        run: |
+          cd tests/fixtures/provenance/r0_8
+          sha256sum -c SHA256SUMS
