@@ -19,3 +19,6 @@ results.json
 baseline.json
 candidate.json
 comparison.json
+
+# Compilaciones Rust
+target/
