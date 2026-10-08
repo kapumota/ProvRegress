@@ -1,6 +1,8 @@
-//! Referencia Rust P2 con proyección y validación DAG, sin comparar grafos.
+//! Referencia Rust P2/P3 con proyección, alineamiento y DeltaG observables.
 
+pub mod alignment;
 pub mod canonical;
+pub mod diff;
 pub mod projector;
 pub mod schema;
 
@@ -14,3 +16,9 @@ pub use schema::{
 pub use projector::{
     project_trace, validate_dag, EventEnvelope, GraphValidationError, ProjectionError,
 };
+
+pub use alignment::{
+    align_graphs, semantic_key, AlignedNode, AlignmentError, AmbiguousGroup, GraphAlignment,
+    UnmatchedNode,
+};
+pub use diff::{diff_graphs, GraphDiffError};

@@ -59,3 +59,20 @@ cargo fmt --all --check
 cargo test --workspace --locked
 cargo clippy --workspace --all-targets --locked -- -D warnings
 ```
+
+#### R3: alineamiento conservador y diferencial tipado
+
+`align_graphs()` revalida DAG y exige identidad de aplicación, caso y repetición
+compatibles. Las claves P3 omiten `run_id`, timestamps, condición y versión
+de sistema. Solo alinea eventos únicos. Cuando un tipo de evento aparece varias
+veces en alguno de los dos runs, conserva todo el grupo como ambiguo.
+
+`diff_graphs()` utiliza únicamente las parejas de I3, separa cambios
+`payload_hash`, `attributes` y `error`, y contrasta relaciones por claves
+semánticas. Las aristas incidentes en eventos ambiguos se informan por lado
+y multiplicidad, sin inventar correspondencias. Se ordenan registros por bytes
+JSON canónicos y se calcula `delta_hash` del objeto sin su propio digest.
+
+Las pruebas de R3 cotejan los cinco `DeltaG` golden completos, incluidos hashes.
+No cambian F1/F2/F3, los schemas ni las implementaciones Python. R4 debe probar
+conformidad entre procesos e investigar límites numéricos de serialización.
