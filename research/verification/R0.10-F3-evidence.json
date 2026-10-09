@@ -1,0 +1,55 @@
+{
+  "baseline": {
+    "branch": "r0.10-provenance-v2",
+    "i2_ci_observation": "success_verified_by_reviewer",
+    "i2_ci_url": "https://github.com/kapumota/ProvRegress/actions/runs/37869140801",
+    "i2_commit": "6a503c3f6cd253c3a8f776e41d8ab9d05aa4cfa3"
+  },
+  "decision": {
+    "confirmatory_study": "blocked",
+    "mutation_harness": "experimental_execution_blocked",
+    "provenance_v2_contract": "candidate_not_frozen",
+    "rust_reference": "v1_frozen_unchanged",
+    "technical_audit": "closed_with_conditions"
+  },
+  "files_sha256": {
+    "provregress/provenance_v2/__init__.py": "aa4b46a7f8f7e931a32f59a2766e13d21c733a97b32e7b30d76b0d4a1416b24b",
+    "provregress/provenance_v2/comparison.py": "aed263ec6a2f359520972fae858e1e91ad3d9a8c3f15c5393da5f27e7c717ba4",
+    "provregress/provenance_v2/live_workloads.py": "3f559f178173b809a231e82e987f240e00760e7cd612bc6351fb5d7911d9b1c6",
+    "provregress/provenance_v2/pilot_audit.py": "626964aed6461716719806ca99a613493da6d87bb908b829b018e71ae7571d4a",
+    "provregress/provenance_v2/projector.py": "5ba6916133e7c5d8230a6cc20ab805b2505adc3fc93b8308a74557f9b2a04878",
+    "provregress/provenance_v2/schema.py": "951ca6935ec402d4edadb2f274d60f684df0cb237a584d12bef50dd95b431618",
+    "research/verification/r010_f2_reference_oracle.py": "e28c8d3deec13c234728a4ca9e401240de1cf6934f9961970c4df095af800b5e",
+    "research/verification/r010_i1_live_runs.py": "3ed7afd954f4b3a988e26e8b3bf1248cdadad9659aacb064e13c081562bda020",
+    "research/verification/r010_i2_pilot_audit.py": "8aee5bccc0a9480b8a741a4972b277727e6a72cd2a5412a9e90d30de554d22e9",
+    "tests/fixtures/provenance/r0_10/SHA256SUMS": "3978eedaaa5ddbd9d6f338465b418eb89112bbb77e4931d18dd1f1fb255e13fc",
+    "tests/fixtures/provenance/r0_10/cases.json": "970ac8daed8ef87c6ee5481c371d4187a12677492119cd1b266368f2f748b9a3",
+    "tests/fixtures/provenance/r0_10/expected.json": "5241adc3d2cf3d758236bf5b4cd1544fb49c947748667506ec7f73f7acf2e3ff",
+    "tests/fixtures/provenance/r0_10_f2/SHA256SUMS": "dd87339aefbb75760b0e68f13624d3fc5d427cd9504fd629dbd03c8b2cd565bb",
+    "tests/fixtures/provenance/r0_10_f2/cases.json": "ef2b1f3445866f8f639a5f3ccac38fc32aa2f762516584590ed7291cd55f73e2",
+    "tests/fixtures/provenance/r0_10_f2/expected.json": "a4b66f6025f2036cdad3636881c03bdeddd93a95afb93bc81e100f58d0cb9c99",
+    "tests/fixtures/provenance/r0_8/SHA256SUMS": "77afade80cad9ea95050cda679b496b45c4abc926d471581f1fff7901362e446",
+    "tests/fixtures/provenance/r0_8/expected.json": "47fd5e198f25704ee0fbc6363ea3621754397aad9ca72507be4a68752fa4be50",
+    "tests/fixtures/provenance/r0_8/inputs.json": "9d2be2dd2d894e7c4c7508cad0bb6160147dc01d82e3d1090e7903a69d9eb242"
+  },
+  "local_i2_expected": {
+    "audit_hash": "c5d7b0f6128cd391d25acdaf14908d3a10cbfcef6cd1d8f05ca680069f6004fe",
+    "max_ambiguity_rate": "0.05",
+    "maximum_false_pairs": 0,
+    "maximum_missed_pairs": 0,
+    "minimum_target_coverage": "1",
+    "negative_rekey_rejections": 6,
+    "positive_pairs_per_app": 18,
+    "repeats": 3
+  },
+  "open_requirements": {
+    "application_specific_policy_calibration": false,
+    "external_or_representative_trace_cohort": false,
+    "fair_comparator_empirical_evaluation": false,
+    "independent_ground_truth_for_a2_a3": false,
+    "pilot_ambiguity_and_target_gates_on_external_cohort": false,
+    "runtime_generated_keys_without_plan_ordinal": false,
+    "v2_persistent_sink_and_content_hash_integrity": false
+  },
+  "schema_version": "r0.10-f3-audit-decision-v1"
+}
