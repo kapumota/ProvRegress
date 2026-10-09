@@ -1,0 +1,63 @@
+{
+  "baseline": {
+    "branch": "main",
+    "i4_sha": "cc506eeca94ccc48fc11efdae618274c7b9c742c",
+    "main_ci_observation": "success_verified_during_f4_preparation",
+    "main_ci_url": "https://github.com/kapumota/ProvRegress/actions/runs/37875343469",
+    "merge_pr": 4,
+    "merge_sha": "94e85677fc612bd47db9dc6747bab785c0e145d2",
+    "repository": "kapumota/ProvRegress"
+  },
+  "decision": {
+    "confirmatory_study": "blocked",
+    "graph_superiority": "not_demonstrated",
+    "provenance_v2_contract": "candidate_not_scientifically_frozen",
+    "r1_experimental_mutations": "blocked",
+    "r1_m1_scaffolding": "permitted_without_experimental_claims",
+    "rust_reference": "v1_frozen_unchanged",
+    "technical_audit": "closed_with_conditions",
+    "technical_baseline": "accepted_for_nonconfirmatory_development"
+  },
+  "i4_cohort_evidence": {
+    "expected_applications": [
+      "a2_rag",
+      "a3_tools"
+    ],
+    "false_pairs": 0,
+    "maximum_ambiguity_rate": "0",
+    "minimum_target_coverage": "1",
+    "missed_pairs": 0,
+    "pairs_per_application": 15,
+    "protocol_sha256": "813970ca018b2249cadf6e050df5809f64302b9d587240628c793435943ac3a3",
+    "scientific_freeze": "blocked_pending_external_validation",
+    "strong_sequence_parity_pairs": 30,
+    "summary_sha256": "4241fa7d975270ff4cb00934f8aa77aa1a30cbab43b43e067347dc1a8810c58c",
+    "superiority_over_sequence": "not_demonstrated",
+    "total_pairs": 30
+  },
+  "integrity_sha256": {
+    "provregress/provenance_v2/cohort_audit.py": "77ad6e2e95029f335c3332cc05002507683078a68616c93475bb7482af097f92",
+    "provregress/provenance_v2/dynamic_adapters.py": "28a84b5218cf73a272410f11014735c2e70e5e4103f206da8924566319738eb0",
+    "provregress/provenance_v2/independent_audit.py": "f81522cb4b07717f8cb764c41792b50953cae94b2c433a5254f65f78ace56413",
+    "provregress/provenance_v2/persistent.py": "c53f90fb83503bc276a106a103b2f06d0b2d2ec51b6bc0e89fe957a878ee67ed",
+    "research/preregistration/R0.10-F3-final-audit-decision.md": "3addf440c14fad5c1b756db452a96d98a58d3166e49f2f6d9ce218d060e92a94",
+    "research/preregistration/R0.10-I4-cohort-evaluation.md": "1ab1b64e7ca574fe6861e82a6f9b35049463ca7da3bfd4bda6b81a53ea598837",
+    "research/preregistration/R0.10-I4-cohort.json": "813970ca018b2249cadf6e050df5809f64302b9d587240628c793435943ac3a3",
+    "research/verification/R0.10-F3-evidence.json": "583b8fa73e644cd715a814c6ecab7638891bd07bba0502a62724d2507c854666",
+    "research/verification/r010_f3_release_gate.py": "0b5d4ec68ce414d436a2f50878693eb0e0bab296bfa5149f3c9ea4e2514431db",
+    "research/verification/r010_i4_cohort_eval.py": "05e169b1ed11974a4ba0235bf926b0b19b37dec7f9732a2162cff323d68698fb",
+    "tests/fixtures/provenance/r0_10_i3/SHA256SUMS": "987a9aa6a78c65b911130563650f529147faf6e898555fb825cae0b46cafd7af",
+    "tests/fixtures/provenance/r0_10_i3/annotations.json": "c2e65f9f3a5838385e16fdcec5e71fdc44b8bc3048da4cb6e95dfd09655b9316",
+    "tests/provregress/test_provenance_v2_i4_cohort.py": "ae4012fc4b13a2c59c599adc548e6b582324eb73f95a699bb3f334a0edac2ae7"
+  },
+  "open_scientific_requirements": {
+    "application_specific_policy_calibration": "blocking",
+    "external_or_representative_trace_cohort": "blocking",
+    "fair_comparator_empirical_evaluation": "blocking",
+    "independent_ground_truth_for_a2_a3": "blocking",
+    "pilot_ambiguity_and_target_gates_on_external_cohort": "blocking",
+    "runtime_generated_keys_without_plan_ordinal": "blocking_external_validation",
+    "v2_persistent_sink_and_content_hash_integrity": "blocking_integrated_scope"
+  },
+  "schema_version": "r0.10-f4-technical-acceptance-v1"
+}
