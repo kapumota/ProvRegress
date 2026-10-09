@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - 'r0.9-*'
+      - 'r0.10-*'
   pull_request:
     branches:
       - main

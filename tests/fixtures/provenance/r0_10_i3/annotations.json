@@ -1,0 +1,30 @@
+{
+  "a2": {
+    "event_type": "retrieval.returned",
+    "expected_keys": {
+      "refund.md": "retrieve:refund.md",
+      "returns.md": "retrieve:returns.md",
+      "shipping.md": "retrieve:shipping.md",
+      "tracking.md": "retrieve:tracking.md"
+    },
+    "expected_new_resource": "tracking.md",
+    "outcome_key": "compose:answer",
+    "resource_field": "document",
+    "root_key": "query:refund"
+  },
+  "a3": {
+    "event_type": "tool.returned",
+    "expected_keys": {
+      "discount": "tool:discount",
+      "inventory": "tool:inventory",
+      "receipt": "tool:receipt",
+      "tax": "tool:tax"
+    },
+    "expected_new_resource": "discount",
+    "outcome_key": "finish:order",
+    "resource_field": "operation",
+    "root_key": "request:order"
+  },
+  "schema_version": "r0.10-i3-reviewed-annotation-v1",
+  "source": "Anotación declarativa externa al ejecutor, revisable manualmente, no ground truth humano independiente."
+}

@@ -1,0 +1,24 @@
+{
+  "schema_version": "r0.10-i4-predeclared-cohort-v1",
+  "purpose": "calibracion_preexperimental_no_confirmatoria",
+  "applications": ["a2_rag", "a3_tools"],
+  "repetitions": [0, 1, 2],
+  "max_ambiguity_rate": "0.05",
+  "minimum_target_coverage": "1",
+  "maximum_false_pairs": 0,
+  "maximum_missed_pairs": 0,
+  "information_parity_required": true,
+  "scenarios": [
+    {"app": "a2_rag", "id": "identity", "baseline": "standard", "candidate": "standard", "added": [], "removed": [], "changed": []},
+    {"app": "a2_rag", "id": "insert", "baseline": "standard", "candidate": "extended", "added": ["retrieve:tracking.md"], "removed": [], "changed": []},
+    {"app": "a2_rag", "id": "remove", "baseline": "extended", "candidate": "standard", "added": [], "removed": ["retrieve:tracking.md"], "changed": []},
+    {"app": "a2_rag", "id": "noise", "baseline": "standard", "candidate": "noise", "added": [], "removed": [], "changed": []},
+    {"app": "a2_rag", "id": "functional", "baseline": "standard", "candidate": "functional", "added": [], "removed": [], "changed": ["retrieve:refund.md", "compose:answer"]},
+    {"app": "a3_tools", "id": "identity", "baseline": "standard", "candidate": "standard", "added": [], "removed": [], "changed": []},
+    {"app": "a3_tools", "id": "insert", "baseline": "standard", "candidate": "extended", "added": ["tool:discount"], "removed": [], "changed": []},
+    {"app": "a3_tools", "id": "remove", "baseline": "extended", "candidate": "standard", "added": [], "removed": ["tool:discount"], "changed": []},
+    {"app": "a3_tools", "id": "noise", "baseline": "standard", "candidate": "noise", "added": [], "removed": [], "changed": []},
+    {"app": "a3_tools", "id": "functional", "baseline": "standard", "candidate": "functional", "added": [], "removed": ["tool:receipt", "tool:tax"], "changed": ["tool:inventory", "finish:order"]}
+  ],
+  "limitations": "cohorte local predefinida, documentos y catalogo de ejemplo, sin LLM externo, sin anotador humano independiente"
+}
