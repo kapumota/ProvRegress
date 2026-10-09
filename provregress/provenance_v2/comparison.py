@@ -282,9 +282,12 @@ def topology_profile_v2(graph: GraphV2) -> dict[str, int | bool]:
 def sequential_baseline_view_v2(graph: GraphV2, *, include_parent_relations: bool = True) -> list[dict[str, Any]]:
     """Vista de eventos con idénticas señales; padres se conservan por defecto."""
     validate_graph_v2(graph)
+    # La vista secuencial usa event_id en las filas. Las relaciones deben
+    # referenciar ese mismo espacio de identidad, no IDs internos del grafo.
+    event_ids = {event.node_id: event.event_id for event in graph.events}
     parents: dict[str, list[str]] = defaultdict(list)
     for edge in graph.edges:
-        parents[edge.target_node_id].append(edge.source_node_id)
+        parents[edge.target_node_id].append(event_ids[edge.source_node_id])
     rows = []
     for event in sorted(graph.events, key=lambda n: n.sequence):
         rows.append({
