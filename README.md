@@ -14,6 +14,14 @@ El repositorio se encuentra en fase preexperimental.
 
 No contiene todavía resultados confirmatorios ni claims científicos validados.
 
+R0.7-R0.9 son referencias v1 congeladas; Rust solo certifica conformidad v1.
+R0.10-F4 cerró la auditoría técnica de procedencia v2, con contrato candidato y
+siete requisitos científicos pendientes. En I4 se observó paridad con la
+secuencia fuerte sobre datos locales controlados, no superioridad gráfica.
+R1.0-M1 está integrado como diseño sin tratamientos experimentales.
+R1.0-M2 introduce validaciones de observabilidad y comparación v2.1 candidata,
+sin habilitar todavía experimentos confirmatorios con mutaciones.
+
 El núcleo histórico de `LLMTestLab` se conserva temporalmente como capa de compatibilidad. La nueva infraestructura se desarrollará en el package `provregress`.
 
 ### Línea científica

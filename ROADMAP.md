@@ -77,14 +77,24 @@ Objetivo:
 
 Rust debe ser conforme con los golden fixtures de Python.
 
+#### R0.10, contrato Python v2 de procedencia diferencial
+
+Estado: auditoría técnica cerrada con condiciones en F4. Baseline de ingeniería
+aceptado, sin congelación científica ni superioridad demostrada frente a secuencia
+fuerte de información equivalente. R0.8, R0.8-I y R0.9 permanecen congelados
+como referencia legacy v1; Rust v2 no es requisito hasta justificar su necesidad.
+
 #### R1.0, mutation harness
 
-Objetivo:
+Estado: M1 integrado, diseño y planificación determinista sin ejecución.
 
-- mutaciones controladas
-- target conocido
-- manifests de mutación
-- controles identity y evaluator
+- M2-P1: mapa declarado JSON Pointer → señal, preflight sobre payloads originales,
+  medición separada de riesgo de mutaciones silenciosas y semántica de comparación
+  v2.1 para `signal_missing`, sin cambiar oráculos R0.10.
+- M2-P2: operadores sobre prompt, índice/recuperador y herramienta, con controles
+  sin efecto y evidencia de propagación a eventos descendientes.
+- Las mutaciones experimentales siguen bloqueadas hasta superar las condiciones
+  científicas de R0.10-F4 y la congelación previa del protocolo.
 
 #### R1.1 a R1.3, aplicaciones experimentales
 
