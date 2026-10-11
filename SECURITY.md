@@ -1,6 +1,6 @@
 ### Seguridad
 
-No publiques:
+No se publica:
 
 - API keys
 - tokens
@@ -13,6 +13,6 @@ No publiques:
 
 #### Reporte de vulnerabilidades
 
-Mientras el repositorio no tenga un canal dedicado, utiliza las funciones privadas de seguridad de GitHub disponibles para el repositorio o contacta al propietario mediante GitHub.
+Se utiliza las funciones privadas de seguridad de GitHub disponibles para el repositorio o contacta al propietario mediante GitHub.
 
-No publiques una vulnerabilidad explotable como issue público antes de coordinar una corrección.
+No se publica una vulnerabilidad explotable como issue público antes de coordinar una corrección.
