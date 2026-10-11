@@ -6,7 +6,7 @@ ProvRegress es un proyecto de investigación y software orientado a estudiar reg
 
 El proyecto parte de una pregunta central:
 
-> ¿Puede la procedencia diferencial entre versiones mejorar la detección y localización de regresiones frente a representaciones basadas únicamente en salida, métricas agregadas o trazas secuenciales?
+> ¿Puede la procedencia diferencial entre versiones mejorar la detección y localización de regresiones frente a representaciones basadas únicamente en salida, métricas agregadas o trazas secuenciales?.
 
 ### Estado
 
